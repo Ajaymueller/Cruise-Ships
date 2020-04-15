@@ -1,0 +1,58 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#viewport {
+    width: 640px;
+    height: 256px;
+    position: relative;
+    overflow-x: auto;
+    background-image: url('../images/water0.png');
+}
+/*#ports > .port means select all elements with a class of port which are a direct child of an element with an id of ports*/
+
+#ports {
+    margin-top: 96px;
+    display: flex;
+    justify-content: space-around;
+
+}
+
+#ports > .port {
+    width: 64px;
+    height: 32px;
+    background-image: url('../images/port.png');
+}
+
+#ship {
+    background-image: url('../images/ship.png');
+    position: absolute;
+    width: 128px;
+    height: 64px;
+}
+
+#sailbutton {
+    font-family: 'Oswald', sans-serif;
+    padding: 10px 20px;
+    width: 100%;
+    background-color: #FB3640;
+    border-bottom: 4px solid #d8040f;
+    bottom: 0;
+    left: 0;
+    border: 0;
+    position: absolute;
+}
+
+#sailbutton:focus {
+    background-color: #d8040f;
+    border-bottom-width: 0;
+    padding-top: 14px;
+    cursor: auto;
+}
