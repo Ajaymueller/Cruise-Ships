@@ -65,9 +65,21 @@
         }, 20);
 
         if (!nextPortElement) {
-            return alert('End of the line!');
+            return window.alert('End of the line!');
         };
     }
+
+    Controller.prototype.renderMessage = function renderMessage() {
+        const messageElement = document.createElement('div');
+        messageElement.id = 'message';
+        messageElememt.innerHTML = message;
+        const viewport = document.querySelector('#viewport');
+        viewport.apendChild(messageElement);
+
+        setTimeout(() => {
+            viewport.removeChild(messageElement);
+        }, 2000);
+    };
 
     if (typeof module !== 'undefined' && module.exports) {
         module.exports = Controller;
