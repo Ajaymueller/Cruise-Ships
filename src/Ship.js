@@ -5,6 +5,7 @@
   this.previousPort = null;
 
   this.currentPort.addShip(this);
+
 }
 
 Ship.prototype = {
@@ -21,6 +22,7 @@ Ship.prototype = {
     const previousPortIndex = this.itinerary.ports.indexOf(this.previousPort);
     this.currentPort = this.itinerary.ports[previousPortIndex + 1];
     this.currentPort.addShip(this);
+    controller.renderMessage(`now departing ${ship.currentPort.name}`)
   },
 };
 if (typeof module !== 'undefined' && module.exports) {

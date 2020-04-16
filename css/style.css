@@ -16,19 +16,18 @@ body {
     overflow-x: auto;
     background-image: url('../images/water0.png');
 }
-/*#ports > .port means select all elements with a class of port which are a direct child of an element with an id of ports*/
+
 
 #ports {
     margin-top: 96px;
     display: flex;
-    justify-content: space-around;
-
+    justify-content: space-around; /* space-around will give equal spacing around each of the element's children. */
 }
 
 #ports > .port {
     width: 64px;
     height: 32px;
-    background-image: url('../images/port.png');
+    background-image: url('../images/port.png'); /*#ports > .port means select all elements with a class of port which are a direct child of an element with an id of ports*/
 }
 
 #ship {

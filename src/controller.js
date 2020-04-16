@@ -54,6 +54,13 @@
         const nextPortIndex = currentPortIndex + 1;
         const nextPortElement = document.querySelector(`[data-port-index='${nextPortIndex}']`);
 
+        if (!nextPortElement) {
+            return alert('End of the line!');
+        };
+
+        this.renderMessage(`now departing ${ship.currentPort.name}`)
+
+
         const shipElement = document.querySelector('#ship');
         const sailInterval = setInterval(() => {
         const shipLeft = parseInt(shipElement.style.left, 10);
@@ -63,18 +70,15 @@
             }
             shipElement.style.left = `${shipLeft + 1}px`;
         }, 20);
-
-        if (!nextPortElement) {
-            return window.alert('End of the line!');
-        };
+        
     }
 
-    Controller.prototype.renderMessage = function renderMessage() {
+    Controller.prototype.renderMessage = function renderMessage(message) {
         const messageElement = document.createElement('div');
         messageElement.id = 'message';
-        messageElememt.innerHTML = message;
+        messageElement.innerHTML = message;
         const viewport = document.querySelector('#viewport');
-        viewport.apendChild(messageElement);
+        viewport.appendChild(messageElement);
 
         setTimeout(() => {
             viewport.removeChild(messageElement);
