@@ -22,6 +22,15 @@
             backgroundIndex += 1;
           }, 1000);
     };
+    /*Controller.prototype.initialiseSea = function initialiseSea() {
+        colors = ['red', 'blue'];
+        colorIndex = 0;
+        var oElem = document.querySelector("#viewport");
+        window.setInterval(() => {
+        colorIndex = (colorIndex + 1) % colors.length;
+        oElem.style.backgroundColor = colors[colorIndex];
+        }, 5000);
+    };*/
 
     Controller.prototype.renderPorts = function renderPorts(ports) {
         const portsElement = document.querySelector("#ports");
@@ -50,22 +59,25 @@
     Controller.prototype.setSail = function setSail() {
         const ship = this.ship
         
+        
+        
         const currentPortIndex = ship.itinerary.ports.indexOf(ship.currentPort);
         const nextPortIndex = currentPortIndex + 1;
         const nextPortElement = document.querySelector(`[data-port-index='${nextPortIndex}']`);
-
+        
+         
         if (!nextPortElement) {
-            return alert('End of the line!');
+            return this.renderMessage(`${ship.currentPort.name} is the last port`);
         };
 
-        this.renderMessage(`now departing ${ship.currentPort.name}`)
-
-
+        this.renderMessage(`now departing ${ship.currentPort.name}`);
+        
         const shipElement = document.querySelector('#ship');
         const sailInterval = setInterval(() => {
         const shipLeft = parseInt(shipElement.style.left, 10);
             if (shipLeft === (nextPortElement.offsetLeft - 32)) {
                 ship.dock();
+                this.renderMessage(`Now arriving at ${ship.currentPort.name}`)
                 clearInterval(sailInterval);
             }
             shipElement.style.left = `${shipLeft + 1}px`;
@@ -91,3 +103,39 @@
         window.Controller = Controller;
       }
 }());
+
+
+/*setSail() {
+    const ship = this.ship;
+
+    if (ship.currentPort) {
+      const currentPortIndex = ship.itinerary.ports.indexOf(ship.currentPort);
+      const nextPortIndex = currentPortIndex + 1;
+      const nextPortElement = document.querySelector(
+        `[data-port-index='${nextPortIndex}']`
+      );
+
+      if (!nextPortElement) {
+        return this.renderMessage(
+          `${ship.currentPort.name} is the last stop, time to get off!`
+        );
+      }
+
+      this.renderMessage(`Now departing ${ship.currentPort.name}`);
+      ship.setSail();
+
+      const shipElement = document.querySelector("#ship");
+      const sailInterval = setInterval(() => {
+        const shipLeft = parseInt(shipElement.style.left, 10);
+        if (shipLeft === nextPortElement.offsetLeft - 32) {
+          ship.dock();
+          this.renderMessage(`Now arriving at ${ship.currentPort.name}`);
+          this.refreshHUD();
+          clearInterval(sailInterval);
+        }
+        shipElement.style.left = `${shipLeft + 1}px`;
+      }, 20);
+    } else {
+      return this.renderMessage("A port needs to be added first!");
+    }
+  }, */
