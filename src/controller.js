@@ -10,6 +10,10 @@
             this.setSail();
         });
 
+        document.querySelector("#sailbutton").addEventListener('click', () => {
+            this.headsUpDisplayMessage();
+        });
+
     };
 
     Controller.prototype.initialiseSea = function initialiseSea() {
@@ -74,8 +78,6 @@
         if (!nextPortElement) {
             return this.renderMessage(`${ship.currentPort.name} is the last port`);
         }
-
-        //this.renderMessage(`now departing ${ship.currentPort.name}`);
         
         const shipElement = document.querySelector('#ship');
         const sailInterval = setInterval(() => {
@@ -83,8 +85,9 @@
             if (shipLeft === (nextPortElement.offsetLeft - 32)) {
                 ship.setSail();
                 ship.dock();
-                //this.renderMessage(`Now arriving at ${ship.currentPort.name}`)
+                this.renderMessage(`Now arriving at ${ship.currentPort.name}`)
                 clearInterval(sailInterval);
+                ship.headsUpDisplayMessage();
             }
             shipElement.style.left = `${shipLeft + 1}px`;
         }, 20);
@@ -108,19 +111,23 @@
     Controller.prototype.headsUpDisplayMessage = function headsUpDisplayMessage() {
         const ship = this.ship;
         const currentPort = document.getElementById("currentport");
-        if (ship.currentPort !== undefined) {
-            currentPort.textContent = `Current Port: ${ship.currentPort.name}`;
-        };
 
         const nextPort = document.getElementById("nextport");
         const currentPortIndex = ship.itinerary.ports.indexOf(ship.currentPort);
         const nextPortIndex = currentPortIndex + 1;
         const nextPortElement = document.querySelector(`[data-port-index='${nextPortIndex}']`);
-        if (nextPortElement === undefined) {
-            nextPort.textContent = ;
+        const nextPortName = ship.itinerary.ports[nextPortIndex].name;
+        
+        
+        if (ship.currentPort !== undefined) {
+            currentPort.textContent = `Current Port: ${ship.currentPort.name}`;
+        };
+
+
+        
+        if(nextPortElement !== undefined) {
+            nextPort.textContent = `Next Port: ${nextPortName}`
         }
-
-
     };
 
 
