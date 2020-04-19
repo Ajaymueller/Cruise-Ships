@@ -4,6 +4,7 @@
 
 
         this.initialiseSea();
+        this.headsUpDisplayMessage()
 
         document.querySelector("#sailbutton").addEventListener('click', () => {
             this.setSail();
@@ -32,6 +33,12 @@
         }, 5000);
     };*/
 
+    
+   /*document.getElementById("sailbutton").addEventListener("mouseover", () => {
+        button.style.boxShadow = '2px 2px 2px grey';
+        button.style.width = "110";
+    });*/
+
     Controller.prototype.renderPorts = function renderPorts(ports) {
         const portsElement = document.querySelector("#ports");
         portsElement.style.width = '0px';
@@ -57,31 +64,32 @@
     }
 
     Controller.prototype.setSail = function setSail() {
+        
         const ship = this.ship
-        
-        
-        
         const currentPortIndex = ship.itinerary.ports.indexOf(ship.currentPort);
         const nextPortIndex = currentPortIndex + 1;
         const nextPortElement = document.querySelector(`[data-port-index='${nextPortIndex}']`);
-        
-         
+        this.renderMessage(`now departing ${ship.currentPort.name}`);
+    
         if (!nextPortElement) {
             return this.renderMessage(`${ship.currentPort.name} is the last port`);
-        };
+        }
 
-        this.renderMessage(`now departing ${ship.currentPort.name}`);
+        //this.renderMessage(`now departing ${ship.currentPort.name}`);
         
         const shipElement = document.querySelector('#ship');
         const sailInterval = setInterval(() => {
         const shipLeft = parseInt(shipElement.style.left, 10);
             if (shipLeft === (nextPortElement.offsetLeft - 32)) {
+                ship.setSail();
                 ship.dock();
-                this.renderMessage(`Now arriving at ${ship.currentPort.name}`)
+                //this.renderMessage(`Now arriving at ${ship.currentPort.name}`)
                 clearInterval(sailInterval);
             }
             shipElement.style.left = `${shipLeft + 1}px`;
         }, 20);
+
+        console.log(nextPortIndex);
         
     }
 
@@ -97,45 +105,30 @@
         }, 2000);
     };
 
+    Controller.prototype.headsUpDisplayMessage = function headsUpDisplayMessage() {
+        const ship = this.ship;
+        const currentPort = document.getElementById("currentport");
+        if (ship.currentPort !== undefined) {
+            currentPort.textContent = `Current Port: ${ship.currentPort.name}`;
+        };
+
+        const nextPort = document.getElementById("nextport");
+        const currentPortIndex = ship.itinerary.ports.indexOf(ship.currentPort);
+        const nextPortIndex = currentPortIndex + 1;
+        const nextPortElement = document.querySelector(`[data-port-index='${nextPortIndex}']`);
+        if (nextPortElement === undefined) {
+            nextPort.textContent = ;
+        }
+
+
+    };
+
+
+
+
     if (typeof module !== 'undefined' && module.exports) {
         module.exports = Controller;
       } else {
         window.Controller = Controller;
       }
 }());
-
-
-/*setSail() {
-    const ship = this.ship;
-
-    if (ship.currentPort) {
-      const currentPortIndex = ship.itinerary.ports.indexOf(ship.currentPort);
-      const nextPortIndex = currentPortIndex + 1;
-      const nextPortElement = document.querySelector(
-        `[data-port-index='${nextPortIndex}']`
-      );
-
-      if (!nextPortElement) {
-        return this.renderMessage(
-          `${ship.currentPort.name} is the last stop, time to get off!`
-        );
-      }
-
-      this.renderMessage(`Now departing ${ship.currentPort.name}`);
-      ship.setSail();
-
-      const shipElement = document.querySelector("#ship");
-      const sailInterval = setInterval(() => {
-        const shipLeft = parseInt(shipElement.style.left, 10);
-        if (shipLeft === nextPortElement.offsetLeft - 32) {
-          ship.dock();
-          this.renderMessage(`Now arriving at ${ship.currentPort.name}`);
-          this.refreshHUD();
-          clearInterval(sailInterval);
-        }
-        shipElement.style.left = `${shipLeft + 1}px`;
-      }, 20);
-    } else {
-      return this.renderMessage("A port needs to be added first!");
-    }
-  }, */

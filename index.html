@@ -10,6 +10,12 @@
     <title>Cruise Ships</title>
 </head>
 <body>
+    <div id = "headsupdisplay">
+    <p id = "currentport">
+    </p>
+    <p id = "nextport"> 
+    </p>
+</div>
     <div id = "viewport">
         <button id = "sailbutton">Set Sail</button>
         <div id = "ship">
@@ -34,7 +40,7 @@
          const ship = new Ship(itinerary);
          const controller = new Controller(ship);
          controller.renderPorts(itinerary.ports);
-         controller.renderShip(ship);
+         controller.renderShip();
     </script>
 </body>
 </html>
